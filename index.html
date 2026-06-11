@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>이미지 퀴즈</title>
+
+<style>
+body{
+ text-align:center;
+ font-family:Arial;
+}
+
+img{
+ width:800px;
+ max-width:95%;
+ cursor:pointer;
+ border:3px solid black;
+}
+
+#result{
+ margin-top:20px;
+ font-size:30px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>이미지 클릭 퀴즈</h1>
+
+<p>정답 위치를 클릭하세요</p>
+
+<img id="quizImage" src="photo.jpg">
+
+<div id="result"></div>
+
+<script>
+
+const answerX = 400;
+const answerY = 300;
+const radius = 80;
+
+const image = document.getElementById("quizImage");
+
+image.addEventListener("click",(e)=>{
+
+ const rect = image.getBoundingClientRect();
+
+ const x = e.clientX - rect.left;
+ const y = e.clientY - rect.top;
+
+ const scaleX = image.naturalWidth/image.width;
+ const scaleY = image.naturalHeight/image.height;
+
+ const originalX = x*scaleX;
+ const originalY = y*scaleY;
+
+ const distance = Math.sqrt(
+  (originalX-answerX)**2+
+  (originalY-answerY)**2
+ );
+
+ if(distance<radius){
+  document.getElementById("result").innerHTML=
+  "✅ 정답!";
+ }else{
+  document.getElementById("result").innerHTML=
+  "❌ 오답!";
+ }
+
+});
+
+</script>
+
+</body>
+</html>
